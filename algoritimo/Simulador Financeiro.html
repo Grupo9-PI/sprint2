@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="fundo">
+    <div class="cabecalho"><h1>Simulador Financeiro</h1></div>
+<br>
+<br>
+    <div class="geral"> 
+
+        Insira primeiro valor: <br>
+        <input type="number" id="input_n1" placeholder="0">
+        <br><br>
+        Insira segundo valor: <br>
+        <input type="number" id="input_n2" placeholder="0">
+        <br><br>
+        Insira terceiro valor: <br>
+        <input type="number" id="input_n3" placeholder="0">
+        <br>
+        <button onclick="simular()" class="botao texto">Simular</button>
+        <br><br>
+        <div id="div_mensagem" class="texto"></div>
+        <br><br>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    function simular() {
+        var n1 = Number(input_n1.value);
+        var n2 = Number(input_n2.value);
+        var n3 = Number(input_n3.value);
+        var mensagem = ``;
+
+        if (n1 > 0 && n2 > 0 && n3 > 0) {
+            mensagem = `O primeiro valor é: <b style="color: purple;">${n1}</b> <br>
+                        O segundo valor é: <b style="color: purple;">${n2}</b> <br> 
+                        O terceiro valor é: <b style="color: purple;">${n3}</b> <br> <br>
+                        
+                        A soma dos valores é: <b style="color: purple;">${n1 + n2 + n3}</b> <br>
+                        A subtração desses valores é: <b style="color: purple;">${n1 -n2 - n3}<b> <br>`
+        } else {
+            alert(`Os números informados não podem ser abaixo de 0 !!!`)
+        }
+
+        div_mensagem.innerHTML = mensagem;
+    }
+</script>
