@@ -1,51 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador Financeiro</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="fundo">
-    <div class="cabecalho"><h1>Simulador Financeiro</h1></div>
-<br>
-<br>
-    <div class="geral"> 
 
-        Insira primeiro valor: <br>
-        <input type="number" id="input_n1" placeholder="0">
-        <br><br>
-        Insira segundo valor: <br>
-        <input type="number" id="input_n2" placeholder="0">
-        <br><br>
-        Insira terceiro valor: <br>
-        <input type="number" id="input_n3" placeholder="0">
+<body>
+    <div class="fundo">
+        <div class="cabecalho">
+            <h1>Pearl</h1>
+            <h2>Simulador Financeiro</h2>
+        </div>
         <br>
-        <button onclick="simular()" class="botao texto">Simular</button>
-        <br><br>
-        <div id="div_mensagem" class="texto"></div>
-        <br><br>
+        <br>
+        <div class="geral">
+            <div class="calculadora">
+                <br>    <br>
+                Quantas instalações de ostras você possui? <br>
+                <input type="number" id="input_n1" placeholder="0">
+                <br><br>
+                Em média, quantas ostras cada instalação possui? <br>
+                <input type="number" id="input_n2" placeholder="0">
+                <br><br>
+                Aproximadamente, quantos quilogramas de pérola é extraído por colheita? <br>
+                <input type="number" id="input_n3" placeholder="0">
+                <br> <br>
+                Qual o preço do quilograma de pérola?
+                <input type="text" id="input_precokg">
+                <br>
+                <button onclick="simular()" class="botao">Simular</button>
+                <br><br>
+                <div id="div_mensagem" class="texto"></div>
+            </div> <br>
+            <br><br>
+        </div>
     </div>
-</div>
 </body>
+
 </html>
 <script>
     function simular() {
-        var n1 = Number(input_n1.value);
-        var n2 = Number(input_n2.value);
-        var n3 = Number(input_n3.value);
+        var oito = 8;
+        var instalacao = Number(input_n1.value);
+        var ostras = Number(input_n2.value);
+        var kg = Number(input_n3.value);
+        var perdaOstra = ostras - ostras * 0.8;
+        var morteOstra = ostras - perdaOstra
+        var precokg = Number(input_precokg.value);
+        var valorBruto = kg * precokg;
+        var resultado = 50 * morteOstra + valorBruto;
         var mensagem = ``;
 
-        if (n1 > 0 && n2 > 0 && n3 > 0) {
-            mensagem = `O primeiro valor é: <b style="color: purple;">${n1}</b> <br>
-                        O segundo valor é: <b style="color: purple;">${n2}</b> <br> 
-                        O terceiro valor é: <b style="color: purple;">${n3}</b> <br> <br>
-                        
-                        A soma dos valores é: <b style="color: purple;">${n1 + n2 + n3}</b> <br>
-                        A subtração desses valores é: <b style="color: purple;">${n1 -n2 - n3}<b> <br>`
+        if (instalacao > 0 && ostras > 0 && kg > 0) {
+            mensagem = `Por colheita, sendo o valor total de colheita sem gastos equivalente a R$ <b style="color: blue">${valorBruto}</b>, é encontrado perdas após a extração de pérolas. <br> <br>
+            Sem o monitoramento ideal de luz, cerca de <b style="color: red">80%</b> das ostras acabam morrendo. Em seu caso, apenas <b style="color: green">${perdaOstra.toFixed(0)}</b> ostras vão sobreviver. <br><br>
+            Para a reposição dessas ostras, será gasto R$ <b style="color: red">${50 * ostras}</b>, sendo o valor da unidade de ostra: R$ <b style="color: red">50,00</b>.<br> <br> 
+            Com o monitoramento de luz, <b style="color: green">${8 * perdaOstra.toFixed(0)}</b> ostras continuarão vivas e será reduzido R$ <b style="color: green">${50 * morteOstra.toFixed(2)}</b> em gastos, aumentando seu lucro para R$ <b style="color: blue">${resultado.toLocaleString('pt-br', 2)}</b>.<br>
+            `
         } else {
-            alert(`Os números informados não podem ser abaixo de 0 !!!`)
+            alert(`Os números informados não podem ser abaixo ou igual a 0 !!!`)
         }
 
         div_mensagem.innerHTML = mensagem;
