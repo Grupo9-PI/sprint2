@@ -70,16 +70,27 @@ insert into usuario(nome, email, senha, cpf, fkGestor, fkEmpresa) values
     
 select u.nome as 'Nome do Usuáio',
 	g.nome as 'Nome do Gestor',
-    e.nome as 'Nome do Gestor'
+    e.nome as 'Nome da Empresa'
 from usuario as u
 	left join usuario as g on u.fkGestor = g.idUser
     join empresa as e on u.fkEmpresa = e.idEmpresa;
 
--- DADOS MONITORAMENTO
-CREATE TABLE monitoramento (
-	idMonitoramento INT PRIMARY KEY AUTO_INCREMENT,
-    numSerial int,
+-- DADOS SENSOR
+CREATE TABLE sensor (
+	idSensor INT PRIMARY KEY AUTO_INCREMENT,
+    numSerial char(8),	
+    dtInstalacao date,
     fkEmpresa int,
     constraint fkMonitoramentoEmpresa foreign key(fkEmpresa) references empresa(idEmpresa));
     
+-- DADOS MONITORAMENTO 
+create table monitoramento(
+	idSensor int primary key auto_increment,
+    numSerial char(8),
+    fkSensor int,
+    dtMonitoramento datetime,
+		constraint fkSensorMonitoramendo foreign key (fkSensor) references sensor(idSensor));
+    
+    
+
  
