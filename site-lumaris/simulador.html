@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div>
+            <a class="logo" href="index.html">LUMARIS</a>
+        </div>
+        <div>
+            <hr>
+        </div>
+        <div class="navegacao">
+            <a href="index.html">Início</a><a href="simulador.html" style="color: turquoise;">Simulador</a><a
+                href="login.html">Login</a><a href="cadastro.html">Cadastro</a>
+        </div>
+    </div>
+    <div class="simulador">
+        <div class="container">
+            <div class="card card-simulador">
+                <div class="formulario">
+                    <h1>Simulador Financeiro</h1>
+                    <div class="campo">
+                        Quantas instalações de ostras você possui? <br>
+                        <input type="number" id="input_n1" placeholder="0">
+                    </div>
+                    <div class="campo">
+                        Em média, quantas ostras cada instalação possui? <br>
+                        <input type="number" id="input_n2" placeholder="0">
+                    </div>
+                    <div class="campo">
+                        Aproximadamente, quantos quilogramas de pérola é extraído por colheita? <br>
+                        <input type="number" id="input_n3" placeholder="0">
+                    </div>
+                    <div class="campo">
+                        Qual o preço do quilograma de pérola?
+                        <input type="number" id="input_precokg" placeholder="0">
+                    </div>
+                    <button onclick="simular()" class="botao">Simular</button>
+                </div>
+                <div id="div_mensagem" class="texto"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer2">
+        <div class="footer">
+            <div class="ondas-footer">
+                <div class="onda" id="onda"></div>
+                <div class="onda" id="onda2"></div>
+                <div class="onda" id="onda3"></div>
+                <div class="onda" id="onda4"></div>
+            </div>
+
+            <p>&copy; Lumaris 2025 | Todos os direitos reservados</p>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    function simular() {
+        var oito = 8;
+        var instalacao = Number(input_n1.value);
+        var ostras = Number(input_n2.value);
+        var kg = Number(input_n3.value);
+        var perdaOstra = ostras - ostras * 0.8;
+        var morteOstra = ostras - perdaOstra
+        var precokg = Number(input_precokg.value);
+        var valorBruto = kg * precokg;
+        var resultado = 50 * morteOstra + valorBruto;
+        var mensagem = ``;
+
+        if (instalacao > 0 && ostras > 0 && kg > 0) {
+            mensagem = `Por colheita, sendo o valor total de colheita sem gastos equivalente a R$ <b>${valorBruto}</b>, é encontrado perdas após a extração de pérolas. <br> <br>
+            Sem o monitoramento ideal de luz, cerca de <b style="color: red">80%</b> das ostras acabam morrendo. Em seu caso, apenas <b style="color: green">${perdaOstra.toFixed(0)}</b> ostras vão sobreviver. <br><br>
+            Para a reposição dessas ostras, será gasto R$ <b style="color: red">${50 * ostras}</b>, sendo o valor da unidade de ostra: R$ <b style="color: red">50,00</b>.<br> <br> 
+            Com o monitoramento de luz, <b style="color: green">${8 * perdaOstra.toFixed(0)}</b> ostras continuarão vivas e será reduzido R$ <b style="color: green">${50 * morteOstra.toFixed(2)}</b> em gastos, aumentando seu lucro para R$ <b>${resultado.toLocaleString('pt-br', 2)}</b>.<br>
+            `
+        } else {
+            Toastify({
+                text: "Insira valores válidos",
+                duration: 3000,
+                style: {
+                    background: "linear-gradient(to right, #ac2121, #d62424)",
+                },
+            }).showToast();
+        }
+
+        div_mensagem.innerHTML = mensagem;
+    }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

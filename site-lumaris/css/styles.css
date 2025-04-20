@@ -7,10 +7,6 @@
     font-family: 'Playfair Display';
 }
 
-
-
-
-
 /*estiliza e transforma da logo icone para a logo em extenso*/
 
 .logo{
@@ -22,38 +18,10 @@
     align-items: center;
 }
 
-/*.logo-home {
-    margin: auto;
+a{
+    text-decoration: none;
+    color: #434343;
 }
-
-.logo-home img {
-    width: 360px;
-}
-
-.logo-img {
-    height: 90px;
-    padding: 1.5vw;
-}
-
-.transition-logo {
-    transform: translateX(-100%);
-    transition: transform 1s ease-in-out;
-}
-
-.transition-logo-sticky {
-    transform: translateX(-100%);
-    transition: transform 1s ease-in-out;
-}
-
-.transition-logo.visible {
-    transform: translateX(0);
-}
-
-.transition-logo-sticky.visible-sticky {
-    transform: translateX(0);
-}*/
-
-
 
 hr{
 
@@ -194,7 +162,9 @@ main.cards section.card {
     flex-direction: column;
     margin-top: 100px;
 }
-
+b{
+    color: teal;
+}
 .icons-footer{
     position: relative;
     display: flex;
@@ -361,7 +331,7 @@ html, body {
     flex-direction: column;
 }
 .campo input{
-    height: 28px;
+    height: 35px;
     border: solid 2px turquoise;
     border-radius: 8px;
 }
@@ -377,6 +347,7 @@ html, body {
     width: 50%; 
     height: 50px;
     font-weight: bolder;
+    font-size: large;
     margin: auto; 
 }
 
@@ -398,3 +369,38 @@ html, body {
     box-shadow: 5px 5px 5px #3640433e;
     margin-bottom: 150px;
 }
+
+.simulador {
+    display: flex;
+    height: 700px;
+    width: 100%;
+    background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)),
+    url('../images/conchabanner.png');
+    background-size: cover;
+    /*margin-bottom: -100px;*/
+   
+}
+
+
+.simulador .container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.card-simulador {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    backdrop-filter: blur(50px);
+    background: rgba(255, 255, 255, 0.15); 
+    border-radius: 12px;
+    gap: 20px;
+    width: 550px;
+    box-shadow: 5px 5px 5px #3640433e;
+}
+
