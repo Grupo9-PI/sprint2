@@ -352,7 +352,8 @@ html, body {
 }
 .formulario a {
     text-decoration: none;   
-    color: turquoise;          
+    color: turquoise;
+    font-weight: bolder;          
 }
 
 .campo {
