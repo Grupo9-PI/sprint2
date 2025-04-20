@@ -4,8 +4,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: AppleGaramond;
+    font-family: 'Playfair Display';
 }
+
+
+
 
 
 /*estiliza e transforma da logo icone para a logo em extenso*/
@@ -69,9 +72,15 @@ hr{
 }
 .navegacao{
     display: flex;
+    flex-direction: row;
     justify-content: center;
     gap: 60px;
 }
+.navegacao a {
+    text-decoration: none;   
+    color: inherit;          
+}
+  
 
 /*junto com js, prende a logo e as opções de navegação no topo da tela*/
 .sticky {
@@ -89,7 +98,9 @@ hr{
 .descricao-logo {
     display: flex;
     align-items: flex-start;
-    background-image: url(../images/conchabanner2.png);
+    background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)),
+    url(../images/conchabanner2.png);
     height: 500px;
     width: 100%;
     background-size: cover;
@@ -102,12 +113,11 @@ hr{
 }
 
 .descricao h1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    font-size: 1.2rem;
+    font-size: 30px;
     letter-spacing: 2px;
     line-height: 6vh;
+    margin-left: -80px;
+    color: #fff;
 }
 
 .descricao h1 span {
@@ -163,6 +173,11 @@ main.cards section.card span {
 }
 main.cards section.card {
     box-shadow: 5px 5px 5px #3640433e;
+}
+
+.icon img {
+    width: 150px !important; 
+    height: auto; 
 }
 
 /*rodapé e ondinhas */
@@ -292,4 +307,93 @@ p{
 
 html, body {
     overflow-x: hidden;
+}
+
+/*login e cadastro*/
+
+.login {
+    display: flex;
+    height: 700px;
+    width: 100%;
+    background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)),
+    url('../images/conchabanner.png');
+    background-size: cover;
+    margin-bottom: -100px;
+}
+
+.card-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    backdrop-filter: blur(50px);
+    background: rgba(255, 255, 255, 0.15); 
+    border-radius: 12px;
+    gap: 20px;
+    width: 350px;
+    margin: auto;
+    box-shadow: 5px 5px 5px #3640433e;
+}
+
+.login .container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+.formulario a {
+    text-decoration: none;   
+    color: turquoise;          
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+.campo input{
+    height: 28px;
+    border: solid 2px turquoise;
+    border-radius: 8px;
+}
+
+.campo span {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.botao {
+    background-color: turquoise;
+    border: none;
+    border-radius: 4px;
+    width: 50%; 
+    height: 50px;
+    font-weight: bolder;
+    margin: auto; 
+}
+
+.botao:hover {
+    background-color: #009999;
+}
+
+.card-cadastro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    backdrop-filter: blur(50px);
+    background: rgba(255, 255, 255, 0.15); 
+    border-radius: 12px;
+    gap: 20px;
+    width: 500px;
+    margin-top: 100px;
+    box-shadow: 5px 5px 5px #3640433e;
+    margin-bottom: 150px;
 }
