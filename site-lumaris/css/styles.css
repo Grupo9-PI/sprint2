@@ -283,7 +283,7 @@ html, body {
 
 .login {
     display: flex;
-    height: 700px;
+    height: 800px;
     width: 100%;
     background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)),
@@ -304,6 +304,7 @@ html, body {
     width: 350px;
     margin: auto;
     box-shadow: 5px 5px 5px #3640433e;
+    margin-top: 150px;
 }
 
 .login .container {
@@ -312,6 +313,7 @@ html, body {
     width: 100%;
     align-items: center;
     justify-content: center;
+    justify-content: space-evenly;
 }
 
 .formulario {
@@ -372,13 +374,13 @@ html, body {
 
 .simulador {
     display: flex;
-    height: 700px;
+    height: 800px;
     width: 100%;
     background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)),
     url('../images/conchabanner.png');
     background-size: cover;
-    /*margin-bottom: -100px;*/
+    margin-bottom: -77px;
    
 }
 

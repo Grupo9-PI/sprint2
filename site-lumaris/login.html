@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
-    <title>Document</title>
+    <link rel="shortcut icon" href="./images/Lumaris.jpg" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <title>Entre em Lumaris</title>
 </head>
 <body>
 
@@ -43,8 +45,9 @@
                         <input id="senha_input" type="password" placeholder="******">
                     </div>
                     
-                    <button class="botao">Entrar</button>
-                    <span>Não tem conta?</span><a href="cadastro.html">Cadastre-se!</a>
+                    <button class="botao" onclick="entrar()">Entrar</button>
+                    <span>Não tem conta? <a href="cadastro.html">Cadastre-se!</a></span>
+                    <a href="cadastro.html">Redefinir senha</a>
 
                 </div>
 
@@ -78,3 +81,27 @@
 
 </body>
 </html>
+
+<script>
+
+    function entrar(){
+        var email = email_input.value;
+        var senha = senha_input.value;
+
+        if (email != 'marebranca2025@email.com' || senha != '#Mare25'){
+            Toastify({
+                  text: "E-mail ou senha inválidos",
+                  duration: 3000,
+                  style: {
+                      background: "linear-gradient(to right, #ac2121, #d62424)",
+                  },
+              }).showToast();
+        }
+        else{
+     
+        }
+    }
+
+</script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
