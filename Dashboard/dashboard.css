@@ -64,6 +64,7 @@ body {
     height: 225px;
 }
 .titulo{
+    margin-bottom: 5px;
     margin-left: 15px;
     font-size: xx-large;
 }
