@@ -6,108 +6,306 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.0/dist/chartjs-chart-matrix.min.js"></script>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
-
-  <div class="pai">
-
-    <div class="menu">
-
-      *icone*
-
-    </div>
-
+  <div class="container">
     <div class="dash">
-      <div class="titulo">
-
-        Bem vindo <span style="color: orange;">usuario!</span>
-      </div>
+      <div class="titulo">Bem-vindo, <span style="color: orange;">usuário</span>!</div>
 
       <div class="alertas">
-
-        <div class="alerta">Alerta !!! <br><br> Iluminação baixa no setor 20!</div>
-        <div class="alerta">Alerta !!! <br> <br> Iluminação excessiva no setor 12</div>
-        <div class="alerta">Alerta !!! <br> <br> Instabilidade luminosa no setor 02</div>
-
-
+        <div class="alerta" onclick="openModal('sensores')">
+          <div class="titulo">Sensores em risco</div>
+          <div class="valor">0 <span class="material-icons">error</span></div>
+        </div>
+        <div class="alerta" onclick="openModal('luminosidade')">
+          <div class="titulo">Nível de Luminosidade atual</div>
+          <div class="valor">934 <span class="material-icons">show_chart</span></div>
+        </div>
+        <div class="alerta" onclick="openModal('instabilidade')">
+          <div class="titulo">Instabilidade luminosa</div>
+          <div class="valor">Setor 02 <span class="material-icons">light_mode</span></div>
+        </div>
+        <div class="alerta" onclick="openModal('ideal')">
+          <div class="titulo">Luminosidade da fazenda</div>
+          <div class="valor">IDEAL <span class="material-icons">highlight</span></div>
+        </div>
+        <div class="alerta" onclick="openModal('todos')">
+          <div class="titulo">Ver todos...</div>
+        </div>
       </div>
 
-
       <div class="graficos">
-
         <div class="linha">
           <canvas id="myChart"></canvas>
         </div>
-
         <div class="barra">
           <canvas id="myChart2"></canvas>
         </div>
-
+        <div class="heatmap">
+          <canvas id="heatmapCanvas"></canvas>
+        </div>
+        <div class="donut" style="height: 150px; width: 150px;">
+          <canvas id="myDonutChart"></canvas>
+        </div>
+        <div class="economia" style="height: 150px; width: 300px;">
+          Economia estimada por monitoramento <br><br> <h2>R$ <span>1.212,90</span>/mes</h2>
+          
+        </div>
       </div>
-
     </div>
-
   </div>
 
+  <!-- Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="modal-title">Informações</h2>
+      <p id="modal-text">Texto informativo sobre o item.</p>
+    </div>
+  </div>
+
+  <script>
+    // Gráfico de linha
+    const ctx = document.getElementById('myChart');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['12h00', '13h00', '14h00', '15h00', '16h00', '17h00'],
+        datasets: [{
+          label: 'Temperatura',
+          data: [30, 29, 28, 25, 22, 23],
+          borderWidth: 1
+        }, {
+          label: 'Umidade',
+          data: [80, 82, 80, 85, 80, 83],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+
+    const ctx2 = document.getElementById('myChart2');
+
+    // Horários do dia (de 00h a 23h)
+    const horas = [
+      '00h', '01h', '02h', '03h', '04h', '05h',
+      '06h', '07h', '08h', '09h', '10h', '11h',
+      '12h', '13h', '14h', '15h', '16h', '17h',
+      '18h', '19h', '20h', '21h', '22h', '23h'
+    ];
+
+    // Dados de luminosidade (manual para cada hora)
+    const luminosidade = [
+      10, 15, 20, 25, 30, 35, 45, 60, 75, 85,
+      90, 95, 100, 95, 85, 75, 65, 55, 50, 45,
+      40, 35, 25, 15, 10
+    ];
+
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: horas,
+        datasets: [{
+          label: 'Luminosidade ao longo do dia',
+          data: luminosidade,
+          borderWidth: 1,
+          backgroundColor: 'rgba(255, 223, 0, 0.8)', // Cor amarela para simular a luminosidade
+          borderColor: 'rgba(255, 223, 0, 1)',
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,  // Máximo de 100% de luminosidade
+          }
+        }
+      }
+    });
+
+
+
+    const ctx3 = document.getElementById('heatmapCanvas').getContext('2d');
+
+    function calcularIntensidade(x, y, centroX, centroY, maxDist) {
+      const distancia = Math.sqrt(Math.pow(x - centroX, 2) + Math.pow(y - centroY, 2));
+      const intensidade = Math.max(0, 100 - (distancia / maxDist) * 100);
+      return intensidade;
+    }
+
+
+    const tamanhoMatriz = 30;
+    const centroX = tamanhoMatriz / 2;
+    const centroY = tamanhoMatriz / 2;
+    const maxDist = tamanhoMatriz / 2;
+
+
+    const data = [];
+    for (let x = 0; x < tamanhoMatriz; x++) {
+      for (let y = 0; y < tamanhoMatriz; y++) {
+        const intensidade = calcularIntensidade(x, y, centroX, centroY, maxDist);
+        data.push({
+          x: x,
+          y: y,
+          v: intensidade
+        });
+      }
+    }
+
+    new Chart(ctx3, {
+      type: 'matrix',
+      data: {
+        datasets: [{
+          label: 'Intensidade de Luminosidade',
+          data: data,
+          backgroundColor: function (context) {
+            const value = context.raw.v;
+            const intensity = value / 100;
+            const r = 255;
+            const g = Math.floor(220 + intensity * 35);
+            const b = Math.floor(100 + intensity * 155);
+            return `rgb(${r}, ${g}, ${b})`;
+          },
+          borderWidth: 0,
+          width: 25,
+          height: 25,
+
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'bottom',
+            title: {
+              display: true,
+              text: 'Setor da Fazenda'
+            }
+          },
+          y: {
+            type: 'linear',
+            title: {
+              display: true,
+              text: 'Horário'
+            }
+          }
+        }
+      }
+    });
+
+
+    const ctx4 = document.getElementById('myDonutChart');
+
+    new Chart(ctx4, {
+      type: 'doughnut',
+      data: {
+        labels: ['Progresso', 'Faltando'],
+        datasets: [{
+          data: [75, 25],
+          backgroundColor: ['#4CAF50', '#E0E0E0'],
+          borderWidth: 0,
+          cutout: '80%'
+        }]
+      },
+      options: {
+        responsive: true,
+        rotation: -90,
+        circumference: 180,
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        }
+      },
+      plugins: [{
+        beforeDraw(chart) {
+          const { width, height, ctx } = chart;
+          ctx.save();
+          const fontSize = height / 4;
+          ctx.font = `${fontSize}px sans-serif`;
+          ctx.fillStyle = '#333';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('75%', width / 2, height / 1.4);
+          ctx.restore();
+        }
+      }]
+    });
+
+
+
+
+
+
+    function openModal(tipo) {
+      const modal = document.getElementById("myModal");
+      const title = document.getElementById("modal-title");
+      const text = document.getElementById("modal-text");
+
+      if (tipo === 'sensores') {
+        title.textContent = "Sensores em risco";
+        text.textContent = "Atualmente não há sensores com mal funcionamento. Tudo está operando normalmente, sem alertas críticos.";
+      } else if (tipo === 'luminosidade') {
+        title.textContent = "Nível de Luminosidade";
+        text.textContent = "O nível de luminosidade está em 934, o que indica uma iluminação adequada para as operações da fazenda.";
+      } else if (tipo === 'instabilidade') {
+        title.textContent = "Instabilidade Luminosa";
+        text.textContent = "Instabilidade detectada no setor 02. Acompanhe o sistema e ajuste as configurações para evitar falhas futuras.";
+      } else if (tipo === 'ideal') {
+        title.textContent = "Luminosidade Ideal";
+        text.textContent = "A luminosidade da fazenda está dentro dos parâmetros ideais, garantindo condições ótimas para o cultivo de ostras.";
+      } else if (tipo == 'todos') {
+        text.innerHTML = `
+<ul>
+  <li>
+    <strong>Sensores em risco:</strong>
+    <p>Atualmente, não há sensores com mal funcionamento ou em risco. Todos os sensores da fazenda estão operando dentro dos parâmetros normais, garantindo o monitoramento adequado e constante das condições ambientais, como temperatura, umidade e luminosidade.</p>
+  </li>
+  <li>
+    <strong>Nível de Luminosidade atual:</strong>
+    <p>O nível de luminosidade atual é de 934 unidades, o que indica uma iluminação excelente e adequada para o ambiente da fazenda de ostras. Este valor é constantemente monitorado para garantir que as condições ideais de luminosidade sejam mantidas para o cultivo das ostras.</p>
+  </li>
+  <li>
+    <strong>Instabilidade luminosa:</strong>
+    <p>Foi detectada uma instabilidade luminosa no setor 02 da fazenda. Este alerta indica que houve uma variação inesperada nos níveis de luz, que pode ter sido causada por falhas temporárias nos sensores ou por interferências externas, como nuvens densas ou ajustes automáticos do sistema.</p>
+  </li>
+  <li>
+    <strong>Luminosidade Ideal:</strong>
+    <p>A luminosidade da fazenda está atualmente dentro dos parâmetros ideais, garantindo condições ótimas para o cultivo de ostras. O sistema de controle ajusta automaticamente os níveis de luminosidade para manter a intensidade da luz dentro da faixa mais eficiente para o crescimento das ostras e o desenvolvimento das algas.</p>
+  </li>
+</ul>
+`;
+      }
+
+      modal.style.display = "flex"; // Exibe o modal
+    }
+
+    // Função para fechar o modal
+    function closeModal() {
+      const modal = document.getElementById("myModal");
+      modal.style.display = "none"; // Esconde o modal
+    }
+
+    // Fechar o modal se clicar fora dele
+    window.onclick = function (event) {
+      const modal = document.getElementById("myModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
 </body>
-<script>
-  const ctx = document.getElementById('myChart');
-
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['12h00', '13h00', '14h00', '15h00', '16h00', '17h00'],
-      datasets: [{
-        label: 'Temperatura',
-        data: [30, 29, 28, 25, 22, 23],
-        borderWidth: 1
-      },
-      {
-        label: 'Umidade',
-        data: [80, 82, 80, 85, 80, 83],
-        borderWidth: 1
-      }
-      ]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
-
-<script>
-  const ctx2 = document.getElementById('myChart2');
-
-  new Chart(ctx2, {
-    type: 'bar',
-    data: {
-      labels: ['12h00', '13h00', '14h00', '15h00', '16h00', '17h00'],
-      datasets: [{
-        label: 'Temperatura Média',
-        data: [22, 24, 27, 23, 20, 18],
-        borderWidth: 1
-      },
-      {
-        label: 'Umidade Média',
-        data: [90, 89, 93, 87, 88, 82],
-        borderWidth: 1
-      }
-      ]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
 
 </html>
