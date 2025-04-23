@@ -139,8 +139,7 @@
 <script src="js/app.js"></script>
 
 <script>
-
-function cadastrar(){
+function cadastrar() {
   var razao = razao_input.value;
   var nome = nome_input.value;
   var email = email_input.value;
@@ -155,64 +154,79 @@ function cadastrar(){
   var rua = rua_input.value;
   var num = num_input.value;
 
-  if(razao != '' &&nome != '' && email != '' && cnpj != '' && tel != '' && cel != '' && senha != '' && confir != '' &&estado != '' && cidade != '' && bairro != '' && rua != '' && num != ''){
-    if(senha != confir){
-      Toastify({
-                  text: "As senhas devem ser iguais",
-                  duration: 3000,
-                  style: {
-                      background: "linear-gradient(to right, #ac2121, #d62424)",
-                  },
-              }).showToast();
-    }
+  //var de controle
+  var validar = true;
 
-    if (!email.includes('@') || !email.includes('.') || email.length < 10) {
-      Toastify({
-                  text: "E-mail inválido",
-                  duration: 3000,
-                  style: {
-                      background: "linear-gradient(to right, #ac2121, #d62424)",
-                  },
-              }).showToast();
-    }
-    if (cel.length != 11){
-      Toastify({
-                  text: "Celular inválido",
-                  duration: 3000,
-                  style: {
-                      background: "linear-gradient(to right, #ac2121, #d62424)",
-                  },
-              }).showToast();
-    }
-
-    if (cnpj.length != 14){
-      Toastify({
-                  text: "CNPJ inválido",
-                  duration: 3000,
-                  style: {
-                      background: "linear-gradient(to right, #ac2121, #d62424)",
-                  },
-              }).showToast();
-    }
-
-    if (tel.length != 10){
-      Toastify({
-                  text: "Telefone inválido",
-                  duration: 3000,
-                  style: {
-                      background: "linear-gradient(to right, #ac2121, #d62424)",
-                  },
-              }).showToast();
-    }
-  }
-  else{
+  //verifica se todos os campos estão preenchidos
+  if (razao == '' || nome == '' || email == '' || cnpj == '' || tel == '' || cel == '' || senha == '' || confir == '' || estado == '' ||cidade == '' || bairro == '' || rua == '' || num == '') {
     Toastify({
-                  text: "Todos campos devem ser preenchidos",
-                  duration: 3000,
-                  style: {
-                      background: "linear-gradient(to right, #ac2121, #d62424)",
-                  },
-              }).showToast();
+      text: "Todos os campos devem ser preenchidos",
+      duration: 3000,
+      style: {
+        background: "linear-gradient(to right, #ac2121, #d62424)",
+      },
+    }).showToast();
+    validar = false;
+  }
+
+  if (senha != confir) {
+    Toastify({
+      text: "As senhas devem ser iguais",
+      duration: 3000,
+      style: {
+        background: "linear-gradient(to right, #ac2121, #d62424)",
+      },
+    }).showToast();
+    validar = false;
+  }
+
+  if (!email.includes('@') || !email.includes('.') || email.length < 10) {
+    Toastify({
+      text: "E-mail inválido",
+      duration: 3000,
+      style: {
+        background: "linear-gradient(to right, #ac2121, #d62424)",
+      },
+    }).showToast();
+    validar = false; 
+  }
+
+  if (cel.length != 11 || isNaN(cel)) {
+    Toastify({
+      text: "Celular inválido",
+      duration: 3000,
+      style: {
+        background: "linear-gradient(to right, #ac2121, #d62424)",
+      },
+    }).showToast();
+    validar = false; 
+  }
+
+  if (tel.length != 10 || isNaN(tel)) {
+    Toastify({
+      text: "Telefone inválido",
+      duration: 3000,
+      style: {
+        background: "linear-gradient(to right, #ac2121, #d62424)",
+      },
+    }).showToast();
+    validar = false; 
+  }
+
+  if (cnpj.length != 14 || isNaN(cnpj)) {
+    Toastify({
+      text: "CNPJ inválido",
+      duration: 3000,
+      style: {
+        background: "linear-gradient(to right, #ac2121, #d62424)",
+      },
+    }).showToast();
+    validar = false; 
+  }
+
+  //valida se nao for false
+  if (validar) {
+    window.location.href = "dashboard.html";
   }
 
 }
