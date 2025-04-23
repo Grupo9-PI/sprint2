@@ -4,22 +4,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.0/dist/chartjs-chart-matrix.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-gauge@4.0.0/dist/chartjs-chart-gauge.min.js"></script>
   <link rel="stylesheet" href="css/dashboard.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="shortcut icon" href="./images/Lumaris.jpg" type="image/x-icon">
 </head>
 
 <body>
-  <div class="container">
-    <div class="dash">
-      <div class="titulo">Bem-vindo, <span style="color: orange;">Mare Branca</span>!</div>
 
+  <div class="container">
+    <div>
+      <a href="./index.html">
+        <span class="material-icons" style="font-size: x-large;">arrow_back_ios</span>
+      </a>
+    </div>
+    <div class="dash">
+      <div class="nav">
+        <div class="titulo">
+          Bem-vindo, <span style="color: orange;">Maré Branca</span>!
+        </div>
+        <div class="options">
+          
+            <span class="material-icons" style="font-size: xx-large;"><a href="./notificacoes.html" style="margin-right: 20px; text-decoration: none;">notifications</a></span>
+          
+          <a href="./login.html">
+            <span class="material-icons" style="font-size: xx-large;">logout</span>
+          </a>
+        </div>
+      </div>
       <div class="alertas">
         <div class="alerta" onclick="openModal('sensores')">
           <div class="titulo">Sensores em risco</div>
-          <div class="valor">0 <span class="material-icons">error</span></div>
+          <div class="valor">0 de 46 <span class="material-icons">error</span></div>
         </div>
         <div class="alerta" onclick="openModal('luminosidade')">
           <div class="titulo">Nível de Luminosidade atual</div>
@@ -51,10 +70,21 @@
         <div class="donut" style="height: 150px; width: 150px;">
           <canvas id="myDonutChart"></canvas>
         </div>
-        <div class="economia" style="height: 150px; width: 300px;">
-          Economia estimada por monitoramento <br><br> <h2>R$ <span>1.212,90</span>/mes</h2>
-          
+        <div style="height: 150px; width: 300px;">
+          Economia estimada por monitoramento <br><br>
+          <h2>R$ <span>1.212,90</span>/mes</h2>
         </div>
+        
+        <div style="height: 150px; width: 300px;">
+          Lucro do mês passado (BRL) <br><br>
+          <h2><span style="color: rgb(97, 193, 97);">R$123.212,90</span></h2>
+
+        </div>
+        <div style="height: 150px; width: 300px;">
+          Economia estimada por monitoramento <br><br>
+          <h2>R$ <span>1.212,90</span>/mes</h2>
+        </div>
+
       </div>
     </div>
   </div>
@@ -74,11 +104,12 @@
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['12h00', '13h00', '14h00', '15h00', '16h00', '17h00'],
+        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
         datasets: [{
-          label: 'Luminosidade',
-          data: [720, 890, 900, 830, 820, 620],
-          borderWidth: 1
+          label: 'Lucro (BRL)',
+          data: [720, 890, 900, 1200, 1296, 1567, 1777, 2500, 2763, 3012, 3212, 3754],
+          borderWidth: 1,
+          backgroundColor: 'darkgreen',
         }]
       },
       options: {
@@ -113,11 +144,11 @@
       data: {
         labels: horas,
         datasets: [{
-          label: 'Luminosidade ao longo do dia',
+          label: 'Luminosidade ao longo do dia (LUX)',
           data: luminosidade,
           borderWidth: 1,
-          backgroundColor: 'rgba(255, 223, 0, 0.8)', // Cor amarela para simular a luminosidade
-          borderColor: 'rgba(255, 223, 0, 1)',
+          backgroundColor: '#0ABAB5', // Cor amarela para simular a luminosidade
+          borderColor: 'aliceblue',
         }]
       },
       options: {
@@ -163,7 +194,7 @@
       type: 'matrix',
       data: {
         datasets: [{
-          label: 'Intensidade de Luminosidade',
+          label: 'Intensidade de Luminosidade (LUX)',
           data: data,
           backgroundColor: function (context) {
             const value = context.raw.v;
@@ -174,8 +205,8 @@
             return `rgb(${r}, ${g}, ${b})`;
           },
           borderWidth: 0,
-          width: 25,
-          height: 25,
+          width: 15,
+          height: 5,
 
         }]
       },
@@ -210,9 +241,9 @@
         labels: ['Progresso', 'Faltando'],
         datasets: [{
           data: [75, 25],
-          backgroundColor: ['#4CAF50', '#E0E0E0'],
+          backgroundColor: ['darkslategray', '#E0E0E0'],
           borderWidth: 0,
-          cutout: '80%'
+          cutout: '80%',
         }]
       },
       options: {
@@ -240,8 +271,70 @@
     });
 
 
+    const valorAtual = 75; // valor do "velocímetro"
+    const valorMaximo = 100;
 
+    const ctx5 = document.getElementById('velocimetroChart');
 
+    new Chart(ctx5, {
+      type: 'doughnut',
+      data: {
+        labels: ['Baixo', 'Médio', 'Alto'],
+        datasets: [{
+          data: [33, 34, 33], // faixas do velocímetro
+          backgroundColor: ['#4CAF50', '#FFEB3B', '#F44336'],
+          borderWidth: 0,
+          cutout: '80%',
+        }]
+      },
+      options: {
+        responsive: true,
+        rotation: -90,
+        circumference: 180,
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        }
+      },
+      plugins: [{
+        id: 'velocimetroPonteiro',
+        beforeDraw(chart) {
+          const { ctx, chartArea: { width, height } } = chart;
+          const cx = chart.width / 2;
+          const cy = chart.height;
+          const radius = height * 0.8;
+
+          // Desenhar ponteiro
+          const angle = Math.PI * (valorAtual / valorMaximo);
+          const ponteiroX = cx + radius * 0.85 * Math.cos(angle - Math.PI);
+          const ponteiroY = cy + radius * 0.85 * Math.sin(angle - Math.PI);
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(ponteiroX, ponteiroY);
+          ctx.lineWidth = 4;
+          ctx.strokeStyle = '#000';
+          ctx.stroke();
+
+          // Círculo central
+          ctx.beginPath();
+          ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+          ctx.fillStyle = '#000';
+          ctx.fill();
+          ctx.restore();
+
+          // Texto valor
+          ctx.save();
+          ctx.font = `${height / 5}px sans-serif`;
+          ctx.fillStyle = '#000';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`${valorAtual}`, cx, height * 0.75);
+          ctx.restore();
+        }
+      }]
+    });
 
 
     function openModal(tipo) {

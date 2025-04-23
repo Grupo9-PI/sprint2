@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="shortcut icon" href="./images/Lumaris.jpg" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <title>Lumaris</title>
+</head>
+<body>
+
+    <div class="container">
+        <div>
+          <a href="./dashboard.html">
+            <span class="material-icons" style="font-size: x-large;">arrow_back_ios</span>
+          </a>
+        </div>
+        <div class="notify">
+          <div class="nav">
+            <div class="titulo">
+              <span style="color: orange;">Notificações</span>!
+            </div>
+            <div class="options">
+                <a href="./simulador.html" style="margin-right: 20px; text-decoration: none;">
+                    <span class="material-icons" style="font-size: xx-large; color: orange;">notifications</span>
+                </a>
+              
+              <a href="./login.html">
+                <span class="material-icons" style="font-size: xx-large;">logout</span>
+              </a>
+            </div>
+          </div>
+          <div class="area">
+            <div class="bloco">
+                aklshdjhb
+            </div>
+            <div class="bloco">
+                aklshdjhb
+            </div>
+            <div class="bloco">
+                aklshdjhb
+            </div>
+            <div class="bloco">
+                aklshdjhb
+            </div>
+            <div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div><div class="bloco">
+                aklshdjhb
+            </div>
+          </div>
+        </div>
+    </div>
+        
+
+</body>
+</html>
+
+<script src="js/app.js"></script>
+
+
+<script>
+
+    function redefinir(){
+        var senha = senha_input.value;
+        var confir = confir_input.value;
+
+        if (senha != confir){
+            Toastify({
+                  text: "As senhas devem ser iguais",
+                  duration: 3000,
+                  style: {
+                      background: "linear-gradient(to right, #ac2121, #d62424)",
+                  },
+              }).showToast();
+        }
+        else{
+            window.location.href = "login.html";
+        }
+    }
+
+</script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
