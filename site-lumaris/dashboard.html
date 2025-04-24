@@ -8,9 +8,11 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.0/dist/chartjs-chart-matrix.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-gauge@4.0.0/dist/chartjs-chart-gauge.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
   <link rel="stylesheet" href="css/dashboard.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="shortcut icon" href="./images/Lumaris.jpg" type="image/x-icon">
+  <link href="https://fonts.cdnfonts.com/css/ds-digital" rel="stylesheet">
 </head>
 
 <body>
@@ -24,88 +26,87 @@
     <div class="dash">
       <div class="nav">
         <div class="titulo">
-          Bem-vindo, <span style="color: orange;">Maré Branca</span>!
+          Bem-vindo, <span style="color: teal;">Maré Branca</span>!
         </div>
         <div class="options">
-          
-            <span class="material-icons" style="font-size: xx-large;"><a href="./notificacoes.html" style="margin-right: 20px; text-decoration: none;">notifications</a></span>
-          
+
+          <span class="material-icons" style="font-size: xx-large;"><a href="./notificacoes.html"
+              style="margin-right: 20px; text-decoration: none;">notifications</a></span>
+
           <a href="./login.html">
             <span class="material-icons" style="font-size: xx-large;">logout</span>
           </a>
         </div>
       </div>
-      <div class="alertas">
-        <div class="alerta" onclick="openModal('sensores')">
-          <div class="titulo">Sensores em risco</div>
-          <div class="valor">0 de 13 <span class="material-icons">do_not_disturb_on</span></div>
-        </div>
-        <div class="alerta" onclick="openModal('luminosidade')">
-          <div class="titulo">Nível de Luminosidade atual</div>
-          <div class="valor">934 <span class="material-icons">show_chart</span></div>
-        </div>
-        <div class="alerta" onclick="openModal('instabilidade')">
-          <div class="titulo">Instabilidade luminosa</div>
-          <div class="valor">Ver sensores <span class="material-icons" style="margin-left: 5px;">light_mode</span></div>
-        </div>
-        <div class="alerta" onclick="openModal('ideal')">
-          <div class="titulo">Luminosidade da fazenda</div>
-          <div class="valor">IDEAL <span class="material-icons">highlight</span></div>
-        </div>
-        <div class="alerta" onclick="openModal('todos')">
-          <div class="titulo">Ver todos...</div>
-        </div>
-      </div>
-
-      <div class="graficos">
-
-        <div class="linhas">
-          <canvas id="myChart"></canvas>
-          <span class="material-icons"onclick="openModal('modal-linhas')" style="font-size: large;">info</span>
+      <div class="socorro">
+        <div class="alertas">
+          <div class="alerta risco" onclick="openModal('sensores')">
+            <div class="titulo">Sensores em risco</div>
+            <div class="valor">3 de 13 <span class="material-icons">do_not_disturb_on</span></div>
+          </div>
+          <div class="alerta instabilidade" onclick="openModal('instabilidade')">
+            <div class="titulo">Instabilidade luminosa</div>
+            <div class="valor">Ver sensores <span class="material-icons" style="margin-left: 5px;">light_mode</span>
+            </div>
+          </div>
+          <div class="alerta luminosidade" onclick="openModal('ideal')">
+            <div class="titulo">Luminosidade da fazenda</div>
+            <div class="valor">IDEAL <span class="material-icons">highlight</span></div>
+          </div>
         </div>
 
-        <div class="barras">
-          <canvas id="myChart2"></canvas>
-          <span class="material-icons"onclick="openModal('modal-barras')" style="font-size: large;">info</span>
+        <div class="graficos">
 
+          <div class="linhas">
+            <canvas id="myChart"></canvas>
+            <span class="material-icons" onclick="openModal('modal-linhas')" style="font-size: large;">info</span>
+          </div>
+
+          <div class="barras">
+            <canvas id="myChart2"></canvas>
+            <span class="material-icons" onclick="openModal('modal-barras')" style="font-size: large;">info</span>
+
+          </div>
+
+          <div class="donut" id="donut" style="height: 200px; width: 300px;">
+            <p>Taxa de sobrevivência das ostras</p>
+            <canvas id="myDonutChart"></canvas>
+            <span class="material-icons" style="font-size: large;" onclick="openModal('modal-donut')">info</span>
+
+          </div>
+          <div class="economia" style="height: 150px; width: 300px; ">
+            Economia estimada<br>
+            <h2 style="font-size: 33.7px;">R$ <span>123.212,90</span>/m</h2>
+            <span class="material-icons" style="font-size: large; " onclick="openModal('modal-economia')">info</span>
+
+          </div>
+
+          <div class="lucro" style="height: 150px; width: 300px;">
+            Lucro do mês passado (BRL) <br>
+            <h2><span style="color: rgb(97, 193, 97); font-size: 40px;">R$123.212,90</span></h2>
+            <span class="material-icons" style="font-size: large;" onclick="openModal('modal-lucro')">info</span>
+
+
+          </div>
+          <div class="temporizador" style="height: 150px; width: 300px;">
+            Tempo restante das ostras em <span id="estado" style="color: orange; font-weight: bold;"> Alta
+              Luminsidade</span><br>
+            <h1><span id="temporizador" style="font-family: 'DS-digital', sans-serif; font-size: 60px;">12:00:00</span>
+            </h1>
+            <span class="material-icons" style="font-size: large;" onclick="openModal('modal-temporizador')">info</span>
+
+          </div>
         </div>
-       
-        <div class="donut" id="donut" style="height: 150px; width: 300px;">
-          <p>Taxa de sobrevivência das ostras</p>
-          <canvas id="myDonutChart"></canvas>
-          <span class="material-icons" style="font-size: large;" onclick="openModal('modal-donut')">info</span>
-
-        </div>
-        <div class="economia" style="height: 150px; width: 300px;">
-          Economia estimada por monitoramento <br>
-          <h2>R$ <span>1.212,90</span>/mes</h2>
-          <span class="material-icons" style="font-size: large;" onclick="openModal('modal-economia')">info</span>
-
-        </div>
-        
-        <div class="lucro" style="height: 150px; width: 300px;">
-          Lucro do mês passado (BRL) <br>
-          <h2><span style="color: rgb(97, 193, 97);">R$123.212,90</span></h2>
-          <span class="material-icons" style="font-size: large;" onclick="openModal('modal-lucro')">info</span>
-
-
-        </div>
-        <div class="temporizador" style="height: 150px; width: 300px;">
-          Tempo restante <span id="estado" style="color: orange; font-weight: bold;">na LUZ</span><br>
-          <h1><span id="temporizador">12:00:00</span></h1>
-          <span class="material-icons" style="font-size: large;" onclick="openModal('modal-temporizador')">info</span>
-
-        </div>   
       </div>
     </div>
-  </div>
 
-  <!-- Modal -->
-  <div id="myModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2 id="modal-title">Informações</h2>
-      <p id="modal-text">Texto informativo sobre o item.</p>
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modal-title">Informações</h2>
+        <p id="modal-text">Texto informativo sobre o item.</p>
+      </div>
     </div>
   </div>
 
@@ -159,26 +160,53 @@
           label: 'Luminosidade ao longo do dia (LUX)',
           data: luminosidade,
           borderWidth: 1,
-          backgroundColor: '#0ABAB5', // Cor amarela para simular a luminosidade
+          backgroundColor: '#0ABAB5',
           borderColor: 'aliceblue',
-          maintainAspectRatio: false,
         }]
       },
       options: {
+        plugins: {
+          annotation: {
+            annotations: {
+              minClaro: {
+                type: 'line',
+                yMin: 600,
+                yMax: 600,
+                borderColor: 'green',
+                borderWidth: 2,
+
+              },
+              maxClaro: {
+                type: 'line',
+                yMin: 900,
+                yMax: 900,
+                borderColor: 'green',
+                borderWidth: 2,
+
+              },
+
+            }
+          }
+        },
         scales: {
           y: {
             beginAtZero: true,
-            max: 1000,  // Máximo de 100% de luminosidade
+            max: 1000,
           },
           x: {
-            grid:{
+            grid: {
               display: false,
             }
           }
         }
       }
     });
-       
+
+
+    /*faça 2 linhas*/
+    /*entre 600 e 900 CLARO*/
+    /*entre 100 e 500 ESCURO*/
+
 
     const ctx4 = document.getElementById('myDonutChart');
 
@@ -255,8 +283,6 @@
   </div>`;
       var mensagemInstabilidade = `
       <div class="area-sensores">
-
-  <h1>Relatório de Instabilidade</h1>
   <div class="sensor-list">
 
     <div class="sensor adequada-borda">
@@ -340,25 +366,7 @@
   </div>
   </div>
 `;
-var mensagemTodos = `<ul>
-  <li>
-    <strong>Sensores em risco:</strong>
-    <p>Atualmente, não há sensores com mal funcionamento ou em risco. Todos os sensores da fazenda estão operando dentro dos parâmetros normais, garantindo o monitoramento adequado e constante das condições ambientais, como temperatura, umidade e luminosidade.</p>
-  </li>
-  <li>
-    <strong>Nível de Luminosidade atual:</strong>
-    <p>O nível de luminosidade atual é de 934 unidades, o que indica uma iluminação excelente e adequada para o ambiente da fazenda de ostras. Este valor é constantemente monitorado para garantir que as condições ideais de luminosidade sejam mantidas para o cultivo das ostras.</p>
-  </li>
-  <li>
-    <strong>Instabilidade luminosa:</strong>
-    <p>A métrica que define se há alguma instância de instabilidade adequada, comprometida, critica ou inoperante nos sensores LDR registrados.</p>
-  </li>
-  <li>
-    <strong>Luminosidade Ideal:</strong>
-    <p>A luminosidade da fazenda está atualmente dentro dos parâmetros ideais, garantindo condições ótimas para o cultivo de ostras. O sistema de controle ajusta automaticamente os níveis de luminosidade para manter a intensidade da luz dentro da faixa mais eficiente para o crescimento das ostras e o desenvolvimento das algas.</p>
-  </li>
-</ul>`;
-var mensagemIdeal = `<p>
+      var mensagemIdeal = `<p>
 
   A qualidade da luz disponível na fazenda influencia diretamente a saúde e o crescimento das ostras. Nosso sistema classifica a luminosidade em três níveis:<br><br>
 
@@ -371,47 +379,56 @@ var mensagemIdeal = `<p>
   Mantenha o ambiente sob monitoramento constante para evitar prejuízos à produção.
 </p>
 `;
-var mensagemMedia = `<p>
+      var mensagemMedia = `<p>
 
   Este valor representa a média da luminosidade coletada em tempo real por todos os sensores espalhados pela fazenda de ostras.<br><br>
 
-  🔍 A média é calculada automaticamente com base nas últimas leituras recebidas, oferecendo uma visão geral do ambiente luminoso em toda a fazenda.<br><br>
-
-  ✅ <strong>Por que é importante?</strong><br>
-  Uma média equilibrada indica que, no geral, as condições estão favoráveis. Isso ajuda a evitar decisões baseadas em um único ponto de leitura isolado, permitindo ações mais precisas e eficazes.<br><br>
-
-  ⚠️ <strong>Quando ficar de olho:</strong><br>
-  Se a média estiver muito alta ou muito baixa, mesmo que alguns sensores estejam dentro dos padrões, pode ser sinal de que áreas maiores estão em risco e precisam de atenção.<br><br>
-
-  O monitoramento constante garante o equilíbrio do ecossistema e otimiza o cultivo das ostras.
+  A <b>média</b> é calculada automaticamente com base nas últimas leituras recebidas, oferecendo uma visão geral do ambiente luminoso em toda a fazenda.<br><br>
 </p>
+`;
+      var mensagemRisco = `<div style="font-family: sans-serif; max-width: 500px; margin-top: 20px; line-height: 1.6;">
+  <p>
+    A escala de cores indica o <strong>grau de comprometimento dos sensores</strong>:
+  </p>
+
+  <ul style="list-style: none; padding-left: 0; margin-top: 10px;">
+    <li style="margin-bottom: 12px;">
+      <strong style="color: #4CAF50;">🟢 Verde — Funcionamento Normal:</strong><br>
+      Todos os sensores estão operando dentro dos parâmetros esperados, não há indícios de falha ou interferência nos dispositivos.
+    </li>
+    <li style="margin-bottom: 12px;">
+      <strong style="color: #FFC107;">🟡 Amarelo — Dados Inconsistentes:</strong><br>
+      Os sensores ainda estão ativos, mas os dados coletados apresentam padrões irregulares ou valores fora do esperado.
+    </li>
+    <li>
+      <strong style="color: #F44336;">🔴 Vermelho — Sensor Comprometido:</strong><br>
+      O sensor parou de funcionar corretamente. Ele está reportando apenas valores nulos, zerados ou completamente inválidos.
+    </li>
+  </ul>
+</div>
+
 `;
 
       if (tipo === 'sensores') {
         title.textContent = "Sensores em risco";
-        text.textContent = "Atualmente não há sensores com mal funcionamento. Tudo está operando normalmente, sem alertas críticos.";
-      } else if (tipo === 'luminosidade') {
-        title.textContent = "Nível de Luminosidade";
-        text.innerHTML = `${mensagemMedia}`;
+        text.innerHTML = `${mensagemRisco}`;
       } else if (tipo === 'instabilidade') {
         title.textContent = "Instabilidade Luminosa";
         text.innerHTML = `${mensagemInstabilidade}`;
       } else if (tipo === 'ideal') {
         title.textContent = "Luminosidade Ideal";
         text.innerHTML = `${mensagemIdeal}`;
-      } else if (tipo == 'todos') {
-        text.innerHTML = `${mensagemTodos}`;
-      }else if(tipo == 'modal-linhas'){
+      } else if (tipo == 'modal-linhas') {
         text.innerHTML = `${mensagemLinhas}`;
-      }else if(tipo == 'modal-barras'){
-        text.innerHTML = `${mensagemBarras}`;        
-      }else if(tipo == 'modal-donut'){
+      } else if (tipo == 'modal-barras') {
+        text.innerHTML = `${mensagemBarras}`;
+      } else if (tipo == 'modal-donut') {
         text.innerHTML = `${mensagemDonut}`;
-      }else if(tipo == 'modal-economia'){
+      } else if (tipo == 'modal-economia') {
         text.innerHTML = `${mensagemEconomia}`;
-      }else if(tipo == 'modal-lucro'){
+      } else if (tipo == 'modal-lucro') {
         text.innerHTML = `${mensagemLucro}`;
-      }else if(tipo == 'modal-temporizador'){
+      } else if (tipo == 'modal-temporizador') {
         text.innerHTML = `${mensagemTemporizador}`;
       }
 
@@ -434,87 +451,94 @@ var mensagemMedia = `<p>
   </script>
 
 
-<script>
-  function iniciarTemporizador(cicloHoras = 12) {
-    const display = document.getElementById('temporizador');
-    const estadoTexto = document.getElementById('estado');
-    const cicloMs = cicloHoras * 60 * 60 * 1000;
+  <script>
+    function iniciarTemporizador(cicloHoras = 12) {
+      const display = document.getElementById('temporizador');
+      const estadoTexto = document.getElementById('estado');
+      const cicloMs = cicloHoras * 60 * 60 * 1000;
 
-    // Recupera as informações do localStorage
-    let fim = localStorage.getItem('fim');
-    let ultimoCheck = localStorage.getItem('ultimoCheck');
-    let emLuz = localStorage.getItem('emLuz') === 'true';
-    
-    // Se não houver dado de "fim", iniciamos um novo ciclo
-    if (!fim) {
-      fim = Date.now() + cicloMs;
-      localStorage.setItem('fim', fim);
-    }
+      // Recupera as informações do localStorage
+      var fim = localStorage.getItem('fim');
+      var ultimoCheck = localStorage.getItem('ultimoCheck');
+      var emLuz = localStorage.getItem('emLuz') === 'true';
 
-    // Se não houver dado de "última verificação", iniciamos agora
-    if (!ultimoCheck) {
-      ultimoCheck = Date.now();
-      localStorage.setItem('ultimoCheck', ultimoCheck);
-    }
-
-    // Atualiza o estado de LUZ ou ESCURO
-    if (emLuz) {
-      estadoTexto.textContent = 'na LUZ';
-      estadoTexto.style.color = 'orange';
-    } else {
-      estadoTexto.textContent = 'no ESCURO';
-      estadoTexto.style.color = 'blue';
-    }
-
-    // Atualiza o temporizador a cada segundo
-    setInterval(() => {
-      const agora = Date.now();
-      let elapsedTime = agora - ultimoCheck; // Tempo desde a última atualização
-      let restante = fim - agora; // Tempo restante
-
-      // Se o tempo acabar, reinicia o ciclo
-      if (restante <= 0) {
+      // Se não houver dado de "fim", iniciamos um novo ciclo
+      if (!fim) {
         fim = Date.now() + cicloMs;
-        emLuz = !emLuz; // Alterna para LUZ ou ESCURO
+        localStorage.setItem('fim', fim);
+      }
 
-        // Atualiza o estado na tela
-        if (emLuz) {
-          estadoTexto.textContent = 'na LUZ';
-          estadoTexto.style.color = 'orange';
-        } else {
-          estadoTexto.textContent = 'no ESCURO';
-          estadoTexto.style.color = 'blue';
+      // Se não houver dado de "última verificação", iniciamos agora
+      if (!ultimoCheck) {
+        ultimoCheck = Date.now();
+        localStorage.setItem('ultimoCheck', ultimoCheck);
+      }
+
+      // Atualiza o estado de LUZ ou ESCURO
+      if (emLuz) {
+        estadoTexto.textContent = 'Alta Luminosidade';
+        estadoTexto.style.color = 'orange';
+        display.style.color = 'orange';
+
+      } else {
+        estadoTexto.textContent = 'Baixa Luminosidade';
+        estadoTexto.style.color = 'blue';
+        display.style.color = 'blue';
+
+      }
+
+      // Atualiza o temporizador a cada segundo
+      setInterval(() => {
+        const agora = Date.now();
+        var elapsedTime = agora - ultimoCheck; // Tempo desde a última atualização
+        var restante = fim - agora; // Tempo restante
+
+        // Se o tempo acabar, reinicia o ciclo
+        if (restante <= 0) {
+          fim = Date.now() + cicloMs;
+          emLuz = !emLuz; // Alterna para LUZ ou ESCURO
+
+          // Atualiza o estado na tela
+          if (emLuz) {
+            estadoTexto.textContent = 'Alta Luminosidade';
+            estadoTexto.style.color = 'orange';
+            display.style.color = 'orange';
+          } else {
+            estadoTexto.textContent = 'Baixa Luminosidade';
+            estadoTexto.style.color = 'blue';
+            display.style.color = 'blue';
+
+          }
+
+          // Salva os novos dados no localStorage
+          localStorage.setItem('fim', fim);
+          localStorage.setItem('emLuz', emLuz);
         }
 
-        // Salva os novos dados no localStorage
-        localStorage.setItem('fim', fim);
-        localStorage.setItem('emLuz', emLuz);
-      }
+        // Atualiza o "último check" apenas quando o ciclo for reiniciado
+        if (restante <= 0) {
+          localStorage.setItem('ultimoCheck', Date.now());
+        }
 
-      // Atualiza o "último check" apenas quando o ciclo for reiniciado
-      if (restante <= 0) {
-        localStorage.setItem('ultimoCheck', Date.now());
-      }
+        // Formata o tempo restante corretamente
+        const horas = Math.floor(restante / (1000 * 60 * 60));
+        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
 
-      // Formata o tempo restante corretamente
-      const horas = Math.floor(restante / (1000 * 60 * 60));
-      const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+        // Atualiza o display do temporizador
+        display.textContent =
+          String(horas).padStart(2, '0') + ':' +
+          String(minutos).padStart(2, '0') + ':' +
+          String(segundos).padStart(2, '0');
 
-      // Atualiza o display do temporizador
-      display.textContent =
-        String(horas).padStart(2, '0') + ':' +
-        String(minutos).padStart(2, '0') + ':' +
-        String(segundos).padStart(2, '0');
+      }, 1000);
+    }
 
-    }, 1000);
-  }
+    // Inicia o temporizador quando a página for carregada
+    iniciarTemporizador();
+  </script>
 
-  // Inicia o temporizador quando a página for carregada
-  iniciarTemporizador();
-</script>
 
-  
 
 </body>
 

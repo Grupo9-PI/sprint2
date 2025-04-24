@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="footer2">
+    
         <div class="footer">
             <div class="ondas-footer">
                 <div class="onda" id="onda"></div>
@@ -61,7 +61,6 @@
 
             <p>&copy; Lumaris 2025 | Todos os direitos reservados</p>
         </div>
-    </div>
 </body>
 
 </html>
@@ -80,9 +79,9 @@
         var mensagem = ``;
 
         if (instalacao > 0 && ostras > 0 && kg > 0) {
-            mensagem = `A cada colheita, o valor bruto obtido com a venda das pérolas é de R$ <b>${valorBruto}</b>, mas há perdas registradas após a extração <br>
+            mensagem = `A cada colheita, o valor bruto obtido com a venda das pérolas é de R$ <b>${valorBruto.toLocaleString('pt-br', 2)}</b>, mas há perdas registradas após a extração. <br>
             
-            <br>Sem o monitoramento ideal de luz, cerca de <b style="color: red">80%</b> das ostras acabam morrendo. Em seu caso, apenas <b style="color: green">${perdaOstra.toFixed(0)}</b> ostras vão sobreviver. <br><br>Para a reposição dessas ostras, será gasto R$ <b style="color: red">${50 * ostras}</b>, sendo o valor da unidade de ostra: R$ <b style="color: red">50,00</b>.<br> 
+            <br>Sem o monitoramento ideal de luz, cerca de <b style="color: red">80%</b> das ostras acabam morrendo. Em seu caso, apenas <b style="color: green">${perdaOstra.toFixed(0)}</b> ostras vão sobreviver. <br><br>Para a reposição dessas ostras, será gasto R$ <b style="color: red">${(50 * ostras).toLocaleString('pt-br', 2)}</b>, sendo o valor da unidade de ostra: R$<b style="color: red">50,00</b>.<br> 
             
             <br> Com o monitoramento de luz, cerca de <b style="color: green">${(ostras * 0.8).toFixed(0)}</b> ostras continuarão vivas e será reduzido R$ <b style="color: green">${50 * morteOstra.toFixed(2)}</b> em gastos, aumentando seu lucro para R$ <b>${resultado.toLocaleString('pt-br', 2)}</b>.<br>
             `

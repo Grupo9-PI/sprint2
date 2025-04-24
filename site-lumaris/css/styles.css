@@ -275,7 +275,7 @@ p{
 
 /*esconde tudo que está fora do tamanho da tela do usuário (tipo as ondas por exemplo)*/
 
-html, body {
+body {
     overflow-x: hidden;
 }
 

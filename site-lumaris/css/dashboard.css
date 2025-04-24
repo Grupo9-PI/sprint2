@@ -134,6 +134,18 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  
+}
+.risco{
+  border-right: 8px solid yellow;
+}
+
+.instabilidade{
+  border-right: 8px solid red;
+}
+
+.luminosidade{
+  border-right: 8px solid green;
 }
 
 .alerta:hover {
@@ -186,19 +198,17 @@ a {
   color: #888;
   font-size: 20px;
 }
+
 .barras canvas {
-  width: 88% !important;
-  height: 90% !important;
+  width: 98% !important;
 }
 .linhas canvas {
-  width: 88% !important;
-  height: 90% !important;
+  width: 98% !important;
 }
-
 .graficos .barras{
   flex: 0.5;
   min-width: 500px;
-  height: 250px;
+  min-height: 300px;
   max-width: 1200px;
   background-color: #fff;
   border-radius: 8px;
@@ -210,7 +220,7 @@ a {
 
 .graficos .linhas{
   flex: 0.5;
-  height: 250px;
+  min-height: 250px;
   min-width: 550px;
   max-width: 1200px;
   background-color: #fff;
@@ -218,7 +228,7 @@ a {
   padding: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  width: 90vw;
+  width: 100%;
 }
 .graficos .economia{
   flex: 1;
