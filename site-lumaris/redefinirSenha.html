@@ -35,6 +35,11 @@
                 <div class="formulario">
 
                     <div class="campo">
+                        <span>Digite seu email</span>
+                        <input id="email_input" type="text" >
+                    </div>
+
+                    <div class="campo">
                         <span>Digite sua nova senha:</span>
                         <input id="senha_input" type="password" placeholder="******">
                     </div>
@@ -84,9 +89,9 @@
         var senha = senha_input.value;
         var confir = confir_input.value;
 
-        if (senha != confir){
+        if ((senha != confir) || (senha == '' || confir == '')){
             Toastify({
-                  text: "As senhas devem ser iguais",
+                  text: "Senha inválida",
                   duration: 3000,
                   style: {
                       background: "linear-gradient(to right, #ac2121, #d62424)",
