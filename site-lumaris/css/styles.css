@@ -374,7 +374,8 @@ body {
 
 .simulador {
     display: flex;
-    height: 800px;
+    min-height: 100vh;
+    overflow-y: auto;
     width: 100%;
     background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)),
@@ -390,6 +391,7 @@ body {
     width: 100%;
     align-items: center;
     justify-content: center;
+    margin-bottom: 40px;
     
 }
 
@@ -397,6 +399,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: auto;
     padding: 30px;
     backdrop-filter: blur(50px);
     background: rgba(255, 255, 255, 0.15); 
@@ -405,4 +408,13 @@ body {
     width: 550px;
     box-shadow: 5px 5px 5px #3640433e;
 }
-
+.texto {
+    
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    line-height: 1.6;
+    max-width: 100%;
+    text-align: left;
+} 

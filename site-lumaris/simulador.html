@@ -30,15 +30,15 @@
                     <h1>Simulador Financeiro</h1>
                     <div class="campo">
                         Quantas instalações de ostras você possui? <br>
-                        <input type="number" id="input_n1" placeholder="0">
+                        <input type="number" id="input_qtdInstalacoes" placeholder="0">
                     </div>
                     <div class="campo">
                         Em média, quantas ostras cada instalação possui? <br>
-                        <input type="number" id="input_n2" placeholder="0">
+                        <input type="number" id="input_qtdOstras" placeholder="0">
                     </div>
                     <div class="campo">
                         Aproximadamente, quantos quilogramas de pérola é extraído por colheita? <br>
-                        <input type="number" id="input_n3" placeholder="0">
+                        <input type="number" id="input_kg" placeholder="0">
                     </div>
                     <div class="campo">
                         Qual o preço do quilograma de pérola?
@@ -67,25 +67,29 @@
 <script src="js/app.js"></script>
 <script>
     function simular() {
-        var oito = 8;
-        var instalacao = Number(input_n1.value);
-        var ostras = Number(input_n2.value);
-        var kg = Number(input_n3.value);
-        var perdaOstra = ostras - ostras * 0.8;
-        var morteOstra = ostras - perdaOstra
+        var instalacao = Number(input_qtdInstalacoes.value);
+        var ostras = Number(input_qtdOstras.value);
+        var kg = Number(input_kg.value);
         var precokg = Number(input_precokg.value);
-        var valorBruto = kg * precokg;
-        var resultado = 50 * morteOstra + valorBruto;
         var mensagem = ``;
-
-        if (instalacao > 0 && ostras > 0 && kg > 0) {
-            mensagem = `A cada colheita, o valor bruto obtido com a venda das pérolas é de R$ <b>${valorBruto.toLocaleString('pt-br', 2)}</b>, mas há perdas registradas após a extração. <br>
-            
-            <br>Sem o monitoramento ideal de luz, cerca de <b style="color: red">80%</b> das ostras acabam morrendo. Em seu caso, apenas <b style="color: green">${perdaOstra.toFixed(0)}</b> ostras vão sobreviver. <br><br>Para a reposição dessas ostras, será gasto R$ <b style="color: red">${(50 * ostras).toLocaleString('pt-br', 2)}</b>, sendo o valor da unidade de ostra: R$<b style="color: red">50,00</b>.<br> 
-            
-            <br> Com o monitoramento de luz, cerca de <b style="color: green">${(ostras * 0.8).toFixed(0)}</b> ostras continuarão vivas e será reduzido R$ <b style="color: green">${50 * morteOstra.toFixed(2)}</b> em gastos, aumentando seu lucro para R$ <b>${resultado.toLocaleString('pt-br', 2)}</b>.<br>
-            `
-        } else {
+    
+        // Validações
+        if (
+            isNaN(instalacao) || isNaN(ostras) || isNaN(kg) || isNaN(precokg) ||
+            instalacao <= 0 || ostras <= 0 || kg <= 0 || precokg <= 0
+        ) {
+            if (isNaN(instalacao) || instalacao <= 0) {
+                input_qtdInstalacoes.style.borderColor = '#e74c3c';
+            }
+            if (isNaN(ostras) || ostras <= 0) {
+                input_qtdOstras.style.borderColor = '#e74c3c';
+            }
+            if (isNaN(kg) || kg <= 0) {
+                input_kg.style.borderColor = '#e74c3c';
+            }
+            if (isNaN(precokg) || precokg <= 0) {
+                input_precokg.style.borderColor = '#e74c3c';
+            }
             Toastify({
                 text: "Insira valores válidos",
                 duration: 3000,
@@ -93,9 +97,93 @@
                     background: "linear-gradient(to right, #ac2121, #d62424)",
                 },
             }).showToast();
+            div_mensagem.innerHTML = "";
+            return;
         }
-
+    
+        // Total das ostras na fazenda
+        var totalOstras = ostras * instalacao;
+    
+        // Taxa de mortalidade sem monitoramento (78% morrem, 22% sobrevivem)
+        var ostraSobra = totalOstras * 0.22;
+        var morteOstra = totalOstras - ostraSobra;
+    
+        // Valor bruto da colheita total (todas as ostras geram X kg de pérola)
+        var valorColheita = kg * precokg;
+    
+        // Sem monitoramento: só 22% da produção
+        var valorSemMonitoramento = valorColheita * 0.22;
+    
+        // Com monitoramento: 70% das ostras que morreriam são salvas
+        var ostrasSobreviventes = morteOstra * 0.7;
+        var totalOstrasMonitoradas = ostraSobra + ostrasSobreviventes;
+    
+        // Conversão proporcional de ostras em kg
+        var proporcaoKgPorOstra = kg / totalOstras;
+        var kgMonitorado = totalOstrasMonitoradas * proporcaoKgPorOstra;
+    
+        // Valor bruto com monitoramento
+        var valorMonitorado = kgMonitorado * precokg;
+    
+        // Lucro extra gerado pelo uso do sistema
+        var lucroExtra = valorMonitorado - valorSemMonitoramento;
+    
+        // Custo estimado do serviço de monitoramento
+        var custoMonitoramento = 3000;
+    
+        // Retorno sobre o investimento (ROI)
+        var roi = ((lucroExtra - custoMonitoramento) / custoMonitoramento) * 100;
+    
+        // Simulação para 3 anos (3 colheitas)
+        var ciclos = 3;
+        var receitaTotalMonitorada = valorMonitorado * ciclos;
+    
+        // Mensagem final para o cliente
+        mensagem = `
+    Com base nos dados fornecidos, sua fazenda possui um total de 
+    <span style="font-weight: bold; color: #1abc9c;">${totalOstras}</span> ostras instaladas.
+    <br><br>
+    
+    <span style="font-weight: bold;">Sem o uso de monitoramento</span>, estima-se que apenas <span style="font-weight: bold;">22%</span> dessas ostras sobreviveriam após o ciclo de cultivo, resultando em cerca de 
+    <span style="font-weight: bold; color: #e67e22;">${ostraSobra.toFixed(0)}</span> unidades aproveitadas.
+    <br><br>
+    
+    Com nosso sistema de monitoramento, conseguimos aumentar a taxa de sobrevivência em <span style="font-weight: bold;">até 70% </span>sobre o que normalmente seria perdido, o que representa aproximadamente 
+    <span style="font-weight: bold; color: #2ecc71;">${ostrasSobreviventes.toFixed(0)}</span> ostras salvas.
+    <br><br>
+    
+    No total, isso eleva a quantidade de ostras aproveitadas para 
+    <span style="font-weight: bold; color: #3498db;">${totalOstrasMonitoradas.toFixed(0)}</span>.
+    <br><br>
+    
+    O <span style="font-weight: bold;">valor bruto </span> de uma colheita 
+    <span style="font-weight: bold;">sem monitoramento</span> seria de 
+    <span style="color: #e74c3c;">R$${valorSemMonitoramento.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>, 
+    enquanto <span style="font-weight: bold;">com nosso sistema</span> esse valor pode chegar a 
+    <span style="color: #2ecc71;">R$${valorMonitorado.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>.
+    <br><br>
+    
+    Essa diferença representa um lucro adicional de 
+    <span style="font-weight: bold; color: #f1c40f;">R$${lucroExtra.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span> por colheita.
+    <br><br>
+    
+    Considerando um custo estimado de 
+    <span style="color: #e74c3c;">R$${custoMonitoramento.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span> para o sistema, 
+    o retorno sobre o investimento (ROI) é de aproximadamente 
+    <span style="font-weight: bold; color: #9b59b6;">${roi.toFixed(1)}%</span>.
+    <br><br>
+    
+    Ao longo de três ciclos de colheita, o sistema pode gerar uma receita total de 
+    <span style="font-weight: bold; color: #00ced1;">R$${receitaTotalMonitorada.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>.
+    <br><br>
+    
+    <span style="color: #bdc3c7; font-size: 0.9em;">
+    Valores calculados com base nos dados fornecidos. O desempenho real pode variar conforme condições ambientais e práticas de manejo.
+    </span>
+    `;
+    
         div_mensagem.innerHTML = mensagem;
     }
-</script>
+    </script>
+    
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
