@@ -140,44 +140,33 @@
     
         // Mensagem final para o cliente
         mensagem = `
-    Com base nos dados fornecidos, sua fazenda possui um total de 
-    <span style="font-weight: bold; color: #1abc9c;">${totalOstras}</span> ostras instaladas.
+    Sua fazenda possui um total de 
+    <span style="font-weight: bold; color: blue; font-size: large">${totalOstras}</span> ostras instaladas. <span style="font-weight: bold;">Sem o uso de monitoramento</span>, estima-se que apenas <span style="font-weight: bold; font-size: large">22%</span> dessas ostras sobreviveriam após o ciclo de cultivo, resultando em cerca de 
+    <span style="font-weight: bold; color: red;">${ostraSobra.toFixed(0)}</span> unidades aproveitadas.
     <br><br>
     
-    <span style="font-weight: bold;">Sem o uso de monitoramento</span>, estima-se que apenas <span style="font-weight: bold;">22%</span> dessas ostras sobreviveriam após o ciclo de cultivo, resultando em cerca de 
-    <span style="font-weight: bold; color: #e67e22;">${ostraSobra.toFixed(0)}</span> unidades aproveitadas.
+    Com nosso sistema de monitoramento, conseguimos aumentar a taxa de sobrevivência em <span style="font-weight: bold;">até 70% </span>, o que representa aproximadamente 
+    <span style="font-weight: bold; color: green;">${ostrasSobreviventes.toFixed(0)}</span> ostras salvas.
     <br><br>
     
-    Com nosso sistema de monitoramento, conseguimos aumentar a taxa de sobrevivência em <span style="font-weight: bold;">até 70% </span>sobre o que normalmente seria perdido, o que representa aproximadamente 
-    <span style="font-weight: bold; color: #2ecc71;">${ostrasSobreviventes.toFixed(0)}</span> ostras salvas.
-    <br><br>
-    
-    No total, isso eleva a quantidade de ostras aproveitadas para 
-    <span style="font-weight: bold; color: #3498db;">${totalOstrasMonitoradas.toFixed(0)}</span>.
+    Isso eleva a quantidade de ostras aproveitadas para 
+    <span style="font-weight: bold; color: blue ;">${totalOstrasMonitoradas.toFixed(0)}</span>.
     <br><br>
     
     O <span style="font-weight: bold;">valor bruto </span> de uma colheita 
     <span style="font-weight: bold;">sem monitoramento</span> seria de 
-    <span style="color: #e74c3c;">R$${valorSemMonitoramento.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>, 
+    <span style="font-weight: bold; color: #e74c3c;">R$${valorSemMonitoramento.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>, 
     enquanto <span style="font-weight: bold;">com nosso sistema</span> esse valor pode chegar a 
-    <span style="color: #2ecc71;">R$${valorMonitorado.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>.
-    <br><br>
-    
-    Essa diferença representa um lucro adicional de 
-    <span style="font-weight: bold; color: #f1c40f;">R$${lucroExtra.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span> por colheita.
-    <br><br>
-    
-    Considerando um custo estimado de 
-    <span style="color: #e74c3c;">R$${custoMonitoramento.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span> para o sistema, 
-    o retorno sobre o investimento (ROI) é de aproximadamente 
-    <span style="font-weight: bold; color: #9b59b6;">${roi.toFixed(1)}%</span>.
+    <span style="font-weight: bold; color: green;">R$${valorMonitorado.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>.
+    Que representa um lucro adicional de 
+    <span style="font-weight: bold; color: green;">R$${lucroExtra.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span> por colheita.
     <br><br>
     
     Ao longo de três ciclos de colheita, o sistema pode gerar uma receita total de 
-    <span style="font-weight: bold; color: #00ced1;">R$${receitaTotalMonitorada.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>.
+    <span style="font-weight: bold; color: green;">R$${receitaTotalMonitorada.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>.
     <br><br>
     
-    <span style="color: #bdc3c7; font-size: 0.9em;">
+    <span style="color: black; font-style: italic; font-size: 0.9em;">
     Valores calculados com base nos dados fornecidos. O desempenho real pode variar conforme condições ambientais e práticas de manejo.
     </span>
     `;

@@ -409,8 +409,6 @@ body {
     box-shadow: 5px 5px 5px #3640433e;
 }
 .texto {
-    
-    background-color: rgba(0, 0, 0, 0.4);
     padding: 15px;
     border-radius: 8px;
     margin-top: 20px;
@@ -418,3 +416,6 @@ body {
     max-width: 100%;
     text-align: left;
 } 
+#div_mensagem span{
+    font-size: large;
+  }
